@@ -1,1 +1,35 @@
 
+apiVersion: v1.1
+resources:
+  - name: app
+    type: GitRepo
+    configuration:
+      gitProvider: test1
+      path: dodafna/pipeline-test
+      branches:
+        include: master
+pipelines:
+  - name:   HellowWorld
+    steps:
+      - name: BuildHellowWorld
+        type: MvnBuild
+        configuration:
+          #inherits from bash
+          mvnCommand:       mvn clean package      # required
+          sourceLocation:   .     # required
+          configLocation:  .     # required
+          configFileName:   pom.xml      # required
+ 
+          integrations:
+            - name:         art-integration  # required
+          inputResources:
+            - name:         <gitrepo resource>         # require
+        execution:
+          onStart:
+            - echo "Preparing for work..."
+          onSuccess:
+            - echo "Job well done!"
+          onFailure:
+            - echo "uh oh, something went wrong"
+          onComplete:                                  #always
+            - echo "Cleaning up some stuff"
