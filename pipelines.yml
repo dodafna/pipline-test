@@ -1,7 +1,7 @@
 
 apiVersion: v1.1
 resources:
-  - name: app
+  - name: mvn-test
     type: GitRepo
     configuration:
       gitProvider: test1
@@ -17,13 +17,13 @@ pipelines:
           #inherits from bash
           mvnCommand:       mvn clean package      # required
           sourceLocation:   .     # required
-          configLocation:  .     # required
+          configLocation:   .     # required
           configFileName:   pom.xml      # required
  
           integrations:
             - name:         art-integration  # required
           inputResources:
-            - name:         <gitrepo resource>         # require
+            - name:         mvn-test         # require
         execution:
           onStart:
             - echo "Preparing for work..."
