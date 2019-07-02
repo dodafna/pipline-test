@@ -1,1 +1,20 @@
 
+apiVersion: v1.1
+pipelines:
+  - name: pipe1
+    configuration:
+    steps:
+  - name: build_app
+    type: MvnBuild
+    configuration:
+      sourceLocation: .
+      mvnCommand: clean install
+      configFileLocation: .
+      inputResources:
+        - name: 	test1             # Use the app_gitRepo resource
+   execution:
+     onSuccess:
+       - send_notification notifySlack --text "Maven build completed for $res_app_gitRepo_path at $res_app_gitRepo_gitProvider_url"
+     onFailure:
+       - send_notification notifySlack --text "Maven build FAILED for $res_app_gitRepo_path at $res_app_gitRepo_gitProvider_url"
+
