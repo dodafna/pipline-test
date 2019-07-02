@@ -1,0 +1,8 @@
+resources:
+  - name: app
+    type: GitRepo
+    configuration:
+      gitProvider: myGitHub
+      path: dodafna/pipeline-test
+      branches:
+        include: master
